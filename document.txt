@@ -1,0 +1,2 @@
+## clear docker
+docker system prune -a

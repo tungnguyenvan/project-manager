@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+    #server
+    server:
+        build: ./server
+        ports:
+            - 3002:3002
+        volumes:
+            - ./server:/server/
+            - ./server/node_modules/bcrypt/
+        command: nodemon .
+        restart: always
+        networks:
+            - app-network
+    
+    # MongoDB
+    mongo:
+        image: mongo:latest
+        restart: always
+        volumes:
+            - ./database:/data/db
+        ports:
+            - "27017:27017"
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge
