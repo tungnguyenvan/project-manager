@@ -1,0 +1,14 @@
+import BaseSchema from "framework/data_access/schema/BaseSchema";
+import I__Document from "../document/I__Document";
+
+const document = {
+	...BaseSchema.schema,
+	name: String
+}
+
+/**
+ * __ Schema
+ * @author tung.nguyenvan
+ */
+const __Schema = BaseSchema.initializeDocument<I__Document>("__", document);
+export default __Schema;

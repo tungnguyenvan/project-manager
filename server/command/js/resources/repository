@@ -1,0 +1,15 @@
+import BaseRepository from "framework/core/BaseRepository";
+import I__Document from "../document/I__Document";
+import __Model from "../model/__Model";
+
+/**
+ * __ Repository
+ * @author tung.nguyenvan
+ */
+class __Repository extends BaseRepository<I__Document, __Model> {
+	constructor() {
+		super(new __Model());
+	}
+}
+
+export default __Repository;

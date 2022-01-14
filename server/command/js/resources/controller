@@ -1,0 +1,17 @@
+import BaseController from "framework/core/BaseController";
+import I__Document from "../document/I__Document";
+import __Repository from "../repository/__Repository";
+
+const NAME_SPACE = "UserController"
+
+/**
+ * __ Controller
+ * @author tung.nguyenvan
+ */
+class __Controller extends BaseController<I__Document, __Repository> {
+	constructor() {
+		super(new __Repository());
+	}
+}
+
+export default __Controller;

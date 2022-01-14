@@ -1,0 +1,19 @@
+import BaseModel from "framework/core/BaseModel";
+import I__Document from "../document/I__Document";
+import __Schema from "../schema/__Schema";
+
+/**
+ * __ model
+ * @author tung.nguyenvan
+ */
+class __Model extends BaseModel<I__Document> {
+	constructor() {
+		super(__Schema);
+	}
+
+	select(): string {
+		return '-__v';
+	}
+}
+
+export default __Model;

@@ -1,0 +1,15 @@
+import BaseRouter from "framework/core/BaseRouter";
+import __Controller from "../controller/__Controller";
+import I__Document from "../document/I__Document";
+
+/**
+ * __ Router
+ * @author tung.nguyenvan
+ */
+class __Router extends BaseRouter<I__Document, __Controller> {
+	constructor() {
+		super(new __Controller());
+	}
+}
+
+export default __Router;
