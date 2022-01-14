@@ -1,6 +1,9 @@
 import env from "dotenv";
 env.config();
 
+/**
+ * App Constants
+ */
 class Constant {
     public static DB_URL: string = process.env.DB_URL;
     public static PORT: number | string = process.env.PORT || 3002;

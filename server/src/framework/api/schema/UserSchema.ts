@@ -6,5 +6,9 @@ const document = {
     name: String
 }
 
+/**
+ * User Schema
+ * @author tung.nguyenvan
+ */
 const UserSchema = BaseSchema.initializeDocument<IUserDocument>("users", document);
 export default UserSchema;
