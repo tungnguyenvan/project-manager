@@ -18,6 +18,11 @@ class UserRepository extends BaseRepository<IUserDocument, UserModel> {
         this.byEmail = this.byEmail.bind(this);
     }
 
+    /**
+     * Find user by email at request.body
+     * @param request
+     * @returns
+     */
     byEmail(request: Express.Request): Promise<IUserDocument[]> {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#byEmail start`);
@@ -27,6 +32,11 @@ class UserRepository extends BaseRepository<IUserDocument, UserModel> {
         }
     }
 
+    /**
+     * Update token for user logged
+     * @param request
+     * @returns
+     */
     updateToken(request: Express.Request): Promise<IUserDocument> {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#updateToken start`);

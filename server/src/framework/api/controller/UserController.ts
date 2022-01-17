@@ -83,6 +83,12 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
         }
     }
 
+    /**
+     * Check user can login by email
+     * @param request
+     * @param response
+     * @param next
+     */
     loginByEmail(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginByEmail start`);
@@ -110,6 +116,12 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
         }
     }
 
+    /**
+     * Compare password from client and on database
+     * @param request
+     * @param response
+     * @param next
+     */
     loginValidPassword(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginValidPassword start`);
@@ -132,6 +144,12 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
         }
     }
 
+    /**
+     * Generate token for user login
+     * @param request
+     * @param response
+     * @param next
+     */
     loginGenerateToken(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken start`);
@@ -162,6 +180,13 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
         }
     }
 
+    /**
+     * Login success
+     * Add user id to request.params and call get method
+     * @param request
+     * @param response
+     * @param next
+     */
     loginSuccess(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginSuccess start`);
@@ -175,6 +200,12 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
         }
     }
 
+    /**
+     * Remove fields unnecessary for create user
+     * @param request
+     * @param response
+     * @param next
+     */
     removeFields(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#removeFields start`);
