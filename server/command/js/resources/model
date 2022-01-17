@@ -12,7 +12,7 @@ class __Model extends BaseModel<I__Document> {
 	}
 
 	select(): string {
-		return '-__v';
+		return '';
 	}
 }
 
