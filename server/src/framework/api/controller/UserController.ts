@@ -25,9 +25,9 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
 
     /**
      * Check email is exist
-     * @param request 
-     * @param response 
-     * @param next 
+     * @param request
+     * @param response
+     * @param next
      */
     emailIsUnique(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {
@@ -56,9 +56,9 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
 
     /**
      * hash password before save
-     * @param request 
-     * @param response 
-     * @param next 
+     * @param request
+     * @param response
+     * @param next
      */
     hashPassword(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
         try {

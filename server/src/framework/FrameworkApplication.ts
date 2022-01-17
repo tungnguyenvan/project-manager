@@ -4,6 +4,7 @@ import ApiMiddleware from "./system/ApiMiddleware";
 import DataAccess from "./data_access/DataAccess";
 import bodyParser from "body-parser";
 import UserRouter from "./api/router/UserRouter";
+import FileRouter from "./api/router/FileRouter";
 
 const NAME_SPACE = 'FrameworkApplication'
 
@@ -39,6 +40,7 @@ class FrameworkApplication {
             this.apiApplication.use(bodyParser.json());
 
             this.apiApplication.use('/user', new UserRouter().router);
+            this.apiApplication.use('/file', new FileRouter().router);
         } catch (error: any) {
             Logger.error(NAME_SPACE, `${NAME_SPACE}#initialize`, error);
         } finally {

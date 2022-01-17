@@ -22,6 +22,10 @@ class DefaultRouterValidate {
         ],
     };
 
+    static save: IRouterValidateDocument = {
+        rules: []
+    };
+
     static update: IRouterValidateDocument = {
         rules: [
             new Rule(

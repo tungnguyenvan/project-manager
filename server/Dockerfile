@@ -7,4 +7,5 @@ WORKDIR /server
 COPY package.json /server/
 RUN npm install
 COPY . /server/
+RUN cp .local_env .env
 CMD [ "nodemon ." ]

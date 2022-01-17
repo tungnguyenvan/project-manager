@@ -39,7 +39,11 @@ abstract class BaseRouter<T extends IBaseDocument, Q extends BaseController<T, B
         );
 
         this.router.post('/', [
-
+            new RouterValidate(
+                DefaultRouterValidate.save,
+                RequestField.BODY
+            ).validate,
+            ...(this._middleware?.save ? this._middleware?.save : [])
         ], this._controller.save);
 
         this.router.get('/:id', [

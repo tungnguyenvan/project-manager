@@ -11,7 +11,7 @@ class Constant {
     public static REQUEST_ALL_LIMIT: number =
         (process.env.REQUEST_ALL_LIMIT as unknown as number) || 50;
     public static DEFAULT_PAGE_INDEX: number = 1;
-    public static FIREBASE_BUCKET_URL: string = process.env.FIREBASE_BUCKET_URL;
+    public static FIREBASE_BUCKET_URL: string = process.env.BUCKET_URL;
     public static SALT_ROUNDS = process.env.SALT_ROUNDS;
     public static JWT_SPLIT_CHAR: string = " ";
     public static AUTH_TOKEN_PREFIX: string = process.env.AUTH_TOKEN_PREFIX;

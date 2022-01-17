@@ -25,7 +25,7 @@ class UserModel extends BaseModel<IUserDocument> {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#byEmail start`);
             return this._schema.find({
-                email: email
+                email
             }).exec();
         } finally {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#byEmail end`);
