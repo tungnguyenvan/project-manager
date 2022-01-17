@@ -21,10 +21,22 @@ class UserRouter extends BaseRouter<IUserDocument, UserController> {
                     UserValidateDocument.save,
                     RequestField.BODY
                 ).validate,
+                this._controller.removeFields,
                 this._controller.emailIsUnique,
                 this._controller.hashPassword
             ]
         }
+    }
+
+    initalize(): void {
+        super.initalize();
+
+        this.router.post('/auth/login', [
+            new RouterValidate(UserValidateDocument.login, RequestField.BODY).validate,
+            this._controller.loginByEmail,
+            this._controller.loginValidPassword,
+            this._controller.loginGenerateToken
+        ], this._controller.loginSuccess)
     }
 }
 

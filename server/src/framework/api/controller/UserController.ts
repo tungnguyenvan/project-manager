@@ -21,6 +21,11 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
 
         this.emailIsUnique = this.emailIsUnique.bind(this);
         this.hashPassword = this.hashPassword.bind(this);
+        this.loginByEmail = this.loginByEmail.bind(this);
+        this.loginValidPassword = this.loginValidPassword.bind(this);
+        this.loginGenerateToken = this.loginGenerateToken.bind(this);
+        this.loginSuccess = this.loginSuccess.bind(this);
+        this.removeFields = this.removeFields.bind(this);
     }
 
     /**
@@ -75,6 +80,115 @@ class UserController extends BaseController<IUserDocument, UserRepository> {
             this.catchError(request, response, error);
         } finally {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#hasPassword end`);
+        }
+    }
+
+    loginByEmail(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
+        try {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginByEmail start`);
+            this._repository.byEmail(request)
+                .then(responseData => {
+                    if (!responseData.length) {
+                        return ApiResponse.badRequest(request, response, {
+                            error_type: RequestErrorType.LOGIN_FAILED,
+                            error_field: RequestField.EMAIL,
+                            error_message_id: MessageId.EMAIL_NOT_FOUND,
+                        });
+                    }
+
+                    (request as any).login_by_email = responseData[0];
+                    next();
+                }).catch(error => {
+                    Logger.error(NAME_SPACE, `${NAME_SPACE}#loginByEmail`, error);
+                    this.catchError(request, response, error);
+                })
+        } catch (error) {
+            Logger.error(NAME_SPACE, `${NAME_SPACE}#loginByEmail`, error);
+            this.catchError(request, response, error);
+        } finally {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginByEmail end`);
+        }
+    }
+
+    loginValidPassword(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
+        try {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginValidPassword start`);
+            AppUtil.bcryptCompare(request.body.password, (request as any).login_by_email.password)
+                .then(result => {
+                    if (!result) {
+                        return ApiResponse.badRequest(request, response, {
+                            error_field: RequestField.PASSWORD,
+                            error_type: RequestErrorType.LOGIN_FAILED,
+                            error_message_id: MessageId.PASSWORD_NOT_MATCH,
+                        });
+                    }
+                    next();
+                })
+        } catch (error) {
+            Logger.error(NAME_SPACE, `${NAME_SPACE}#loginValidPassword`, error);
+            this.catchError(request, response, error);
+        } finally {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginValidPassword end`);
+        }
+    }
+
+    loginGenerateToken(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
+        try {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken start`);
+            (request as any).login_by_email.token = AppUtil.generateJsonwebtoken({
+                _id: (request as any).login_by_email._id,
+                email: (request as any).login_by_email.email,
+                status: (request as any).login_by_email.status,
+                role: (request as any).login_by_email.role,
+            });
+
+            this._repository.updateToken(request)
+                .then(updateData => {
+                    if ((updateData as any).modifiedCount > 0) {
+                        next();
+                    } else {
+                        Logger.error(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken cannot update token`, updateData);
+                        ApiResponse.internalServerError(request, response);
+                    }
+                }).catch(error => {
+                    Logger.error(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken`, error);
+                    this.catchError(request, response, error);
+                });
+        } catch (error) {
+            Logger.error(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken`, error);
+            this.catchError(request, response, error);
+        } finally {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginGenerateToken end`);
+        }
+    }
+
+    loginSuccess(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
+        try {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginSuccess start`);
+            request.params.id = (request as any).login_by_email._id;
+            this.get(request, response);
+        } catch (error) {
+            Logger.error(NAME_SPACE, `${NAME_SPACE}#loginSuccess`, error);
+            this.catchError(request, response, error);
+        } finally {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#loginSuccess end`);
+        }
+    }
+
+    removeFields(request: Express.Request, response: Express.Response, next: Express.NextFunction): void {
+        try {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#removeFields start`);
+            delete request.body.role;
+            delete request.body.status;
+            delete request.body.token;
+            delete request.body.avatar;
+
+            next();
+        } catch (error) {
+            Logger.error(NAME_SPACE, `${NAME_SPACE}#removeFields`, error);
+            this.catchError(request, response, error);
+        } finally {
+            Logger.debug(NAME_SPACE, `${NAME_SPACE}#removeFields end`);
         }
     }
 }
