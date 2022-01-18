@@ -10,7 +10,7 @@ const document = {
 	status: {
 		type: String,
 		enum: ProjectStatus,
-		default: ProjectStatus.DOING
+		default: ProjectStatus.TODO
 	},
 
 	member: {
