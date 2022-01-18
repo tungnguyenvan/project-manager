@@ -15,18 +15,15 @@ abstract class BaseModel<T extends IBaseDocument> implements IBaseModel<T> {
         this.all = this.all.bind(this);
     }
 
+    populate() {
+        return BaseModel.populate();
+    }
+
     abstract select(): string;
 
-    populate() {
+    static populate() {
         return [
-            {
-                path: "updated_by",
-                select: "_id lastName firstName phone_number email",
-            },
-            {
-                path: "created_by",
-                select: "_id lastName firstName phone_number email",
-            },
+            ...AppUtil.basePopulate,
         ];
     }
 

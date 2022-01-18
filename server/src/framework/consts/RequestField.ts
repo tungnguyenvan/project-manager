@@ -15,6 +15,8 @@ enum RequestField {
     NAME = 'name',
     PASSWORD = "password",
     EMAIL = "email",
+    USER = 'user',
+    ROLE = 'role'
 }
 
 export default RequestField;

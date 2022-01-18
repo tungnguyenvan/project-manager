@@ -1,5 +1,4 @@
 import ProjectStatus from "app/consts/ProjectStatus";
-import UserRole from "framework/consts/UserRole";
 import BaseSchema from "framework/data_access/schema/BaseSchema";
 import Mongoose from "mongoose";
 import IProjectDocument from "../document/IProjectDocument";
@@ -14,21 +13,10 @@ const document = {
 		default: ProjectStatus.DOING
 	},
 
-	member: [{
-		role: {
-			type: String,
-			enum: UserRole,
-			default: UserRole.DEVELOPER
-		},
-		user: {
-			type: Mongoose.Types.ObjectId,
-			ref: 'users',
-		},
-		by: {
-			type: Mongoose.Types.ObjectId,
-			ref: 'users'
-		}
-	}]
+	member: {
+		type: [Mongoose.Types.ObjectId],
+		ref: 'ProjectMember'
+	}
 }
 
 /**

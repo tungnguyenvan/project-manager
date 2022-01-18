@@ -2,6 +2,7 @@ import BaseModel from "framework/core/BaseModel";
 import AppUtil from "framework/util/AppUtil";
 import IProjectDocument from "../document/IProjectDocument";
 import ProjectSchema from "../schema/ProjectSchema";
+import ProjectMemberModel from "./ProjectMemberModel";
 
 /**
  * Project model
@@ -16,9 +17,14 @@ class ProjectModel extends BaseModel<IProjectDocument> {
 		return '-__v';
 	}
 
-	populate(): { path: string; select: string; }[] {
+	populate(): any {
 		return [
 			...AppUtil.basePopulate,
+			{
+				path: 'member',
+				select: '-__v',
+				populate: ProjectMemberModel.populate()
+			}
 		]
 	}
 }

@@ -1,14 +1,7 @@
 import ProjectStatus from "app/consts/ProjectStatus";
-import IUserDocument from "framework/api/document/IUserDocument";
-import UserRole from "framework/consts/UserRole";
 import IBaseDocument from "framework/core/document/IBaseDocument";
 import Mongoose from "mongoose";
-
-interface IProjectMemberDocument {
-    role: UserRole,
-    user: Mongoose.Types.ObjectId | IUserDocument,
-    by: Mongoose.Types.ObjectId | IUserDocument
-}
+import IProjectMemberDocument from "./IProjectMemberDocument";
 
 /**
  * Project document
@@ -19,7 +12,7 @@ interface IProjectDocument extends IBaseDocument {
 
     status: ProjectStatus;
 
-    member: IProjectDocument[];
+    member: IProjectMemberDocument[] | Mongoose.Types.ObjectId[];
 }
 
 export default IProjectDocument
