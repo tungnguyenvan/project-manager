@@ -49,6 +49,7 @@ class ApiMiddleware {
 
             const authTokenSplied: string[] = AppUtil.splitToken(request.headers.authorization);
             if (authTokenSplied[0] !== Constant.AUTH_TOKEN_PREFIX) {
+                Logger.debug(NAME_SPACE, `${NAME_SPACE}#auth token:`, Constant.AUTH_TOKEN_PREFIX)
                 return ApiResponse.unAuthorized(request, response);
             }
 

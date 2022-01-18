@@ -14,7 +14,7 @@ class Constant {
     public static FIREBASE_BUCKET_URL: string = process.env.BUCKET_URL;
     public static SALT_ROUNDS = process.env.SALT_ROUNDS;
     public static JWT_SPLIT_CHAR: string = " ";
-    public static AUTH_TOKEN_PREFIX: string = process.env.AUTH_TOKEN_PREFIX;
+    public static AUTH_TOKEN_PREFIX: string = process.env.TOKEN_PREFIX;
     public static JSON_WEB_TOKEN_KEY: string = process.env.JSON_WEB_TOKEN_KEY;
     public static JSON_WEB_TOKEN_EXPIRESIN: string = process.env.JSON_WEB_TOKEN_EXPIRESIN;
 }

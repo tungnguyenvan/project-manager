@@ -50,6 +50,12 @@ abstract class BaseRepository<T extends IBaseDocument, Q extends BaseModel<T>> i
     save(request: Express.Request): any {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#save start`);
+
+            if ((request as any).auth) {
+                request.body.created_by = (request as any).auth._id;
+                request.body.updated_by = (request as any).auth._id;
+            }
+
             return this._model.save(request.body as T);
         } finally {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#save end`);
@@ -68,6 +74,11 @@ abstract class BaseRepository<T extends IBaseDocument, Q extends BaseModel<T>> i
     update(request: Express.Request): Promise<T> {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#update start`);
+
+            if ((request as any).auth) {
+                request.body.updated_by = (request as any).auth._id;
+            }
+
             return this._model.update(new Mongoose.Types.ObjectId(request.params.id), request.body);
         } finally {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#update end`);

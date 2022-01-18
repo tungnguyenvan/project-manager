@@ -69,6 +69,19 @@ class AppUtil {
             expiresIn: Constant.JSON_WEB_TOKEN_EXPIRESIN,
         });
     }
+
+    static get basePopulate(): { path: string, select: string }[] {
+        return [
+            {
+                path: 'created_by',
+                select: '-__v -password -token'
+            },
+            {
+                path: 'updated_by',
+                select: '-__v -password -token'
+            },
+        ]
+    }
 }
 
 export default AppUtil;

@@ -58,7 +58,14 @@ abstract class BaseModel<T extends IBaseDocument> implements IBaseModel<T> {
     save(document: T): Promise<T> {
         try {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#save start`);
-            return this._schema.create(document);
+            // return this._schema.create(document);
+            return new Promise((resolve, reject) => {
+                this._schema.create(document).then(result => {
+                    resolve(
+                        result.populate(this.populate())
+                    );
+                }).catch(reject);
+            });
         } finally {
             Logger.debug(NAME_SPACE, `${NAME_SPACE}#save end`);
         }
